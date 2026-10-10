@@ -3,6 +3,7 @@
 from pathlib import Path
 from string import Template
 import html, os, re, shutil
+from content_markdown import read_markdown, render_home
 ROOT=Path(__file__).resolve().parent
 OUT=ROOT/'dist'
 BASE=os.environ.get('BASE_PATH','').rstrip('/')
@@ -14,9 +15,9 @@ def build():
     OUT.mkdir();shutil.copytree(ROOT/'assets',OUT/'assets')
     shutil.copyfile(ROOT/'CNAME',OUT/'CNAME');(OUT/'.nojekyll').touch()
     template=Template((ROOT/'templates/base.html').read_text())
-    privacy='<article class="article"><div class="breadcrumbs"><a href="'+BASE+'/">CantusCaeli</a> / Privacidade</div>'+(ROOT/'content/privacy.html').read_text()+'</article>'
-    contact='''<article class="article contact"><p class="eyebrow">CantusCaeli · Clave Sol</p><h1>Contato</h1><p>Dúvidas sobre o aplicativo ou solicitações relacionadas à privacidade:</p><h2>Djames Suhanko</h2><p><a class="contact-mail" href="mailto:djames.suhanko@gmail.com">djames.suhanko@gmail.com</a></p><p class="note">Envie somente as informações necessárias ao atendimento.</p></article>'''
-    pages=[('/', 'CantusCaeli','Informações públicas do aplicativo CantusCaeli.',Template((ROOT/'content/index.html').read_text()).substitute(base=BASE),True),
+    privacy='<article class="article"><div class="breadcrumbs"><a href="'+BASE+'/">CantusCaeli</a> / Privacidade</div>'+read_markdown(ROOT/'content/privacy.md', BASE)[1]+'</article>'
+    contact='<article class="article contact">'+read_markdown(ROOT/'content/contact.md', BASE)[1]+'</article>'
+    pages=[('/', 'CantusCaeli','Informações públicas do aplicativo CantusCaeli.',render_home(ROOT/'content/index.md', BASE),True),
            ('/privacidade/','Política de Privacidade','Política de privacidade do CantusCaeli: conexões, armazenamento local, exclusão e contato.',privacy,False),
            ('/contato/','Contato','Contato do desenvolvedor e atendimento de privacidade do CantusCaeli.',contact,False),
            ('/404.html','Página não encontrada','Página não encontrada no CantusCaeli.','<article class="article contact"><p class="eyebrow">404</p><h1>Página não encontrada</h1><p><a href="'+BASE+'/">Voltar ao CantusCaeli</a></p></article>',True)]

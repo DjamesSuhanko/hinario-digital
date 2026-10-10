@@ -4,8 +4,8 @@ Site independente do aplicativo, com identidade visual Clave Sol. Domínio: **ca
 
 ## Conteúdo
 
-- `content/index.html`: apresentação provisória, sem indexação até receber o conteúdo definitivo.
-- `content/privacy.html`: conteúdo integral da política fornecida pelo proprietário, de 9 de outubro de 2026, extraído do HTML entregue. Editar este arquivo para atualizar a política publicada.
+- `content/index.md`: apresentação provisória, sem indexação até receber o conteúdo definitivo.
+- `content/privacy.md`: conteúdo integral da política fornecida pelo proprietário, de 9 de outubro de 2026, extraído do HTML entregue. Editar este arquivo para atualizar a política publicada.
 - `templates/base.html` e `assets/style.css`: identidade visual compartilhada com MyLuthier/Musicool.
 - `assets/cantuscaeli-logo.png`: ícone existente do aplicativo, sem alteração.
 - `/privacidade/` e `/privacy.html`: política de privacidade com o mesmo conteúdo.
@@ -16,6 +16,7 @@ Origem da política: `/home/djames/Documents/Codex/2026-10-08/qu/outputs/CantusC
 ## Validar localmente
 
 ```bash
+python3 -m pip install -r requirements.txt
 python3 build.py
 python3 scripts/check_site.py
 python3 -m http.server 8080 --directory dist
@@ -34,3 +35,7 @@ O commit inicial tem `[skip ci]` para não iniciar o deploy. Os próximos pushes
 Política para o Play Console após o deploy: https://cantuscaeli.clavesol.com.br/privacidade/
 
 A página inicial usa `noindex,follow` enquanto provisória; a política e o contato ficam indexáveis. As fontes são carregadas do Google Fonts, como no site do MyLuthier.
+
+## Editar conteúdo
+
+Consulte [EDITAR-CONTEUDO.md](EDITAR-CONTEUDO.md). Apresentação, política e contato são editados em Markdown, dentro de `content/`.
